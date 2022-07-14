@@ -2,18 +2,22 @@ require 'active_record'
 require 'mysql2'
 require 'yaml'
 
+# This database is owned and populated by the `eranbot` tool.
+# We just need to read from it.
+COPYRIGHT_DATABASE = 's51306__copyright_p'
 # turn replica.my.cnf into a yml file with `user` and `password` keys
 credentials = YAML.load(File.open('cnf.yml').read)
 USERNAME = credentials['user']
 PASSWORD = credentials['password']
 
+
 class Replica
   def self.connect(database: 'enwiki')
     ActiveRecord::Base.establish_connection(
       adapter: 'mysql2',
-      database: "#{database}_p",
+      database: COPYRIGHT_DATABASE,
       encoding: 'utf8',
-      host: "#{database}.analytics.db.svc.wikimedia.cloud",
+      host: "tools.labsdb",
       username: USERNAME,
       password: PASSWORD
     )
@@ -24,33 +28,6 @@ class Replica
   end
 end
 
-class Page < ActiveRecord::Base
-  self.table_name = 'page'
-  self.primary_key = 'page_id'
-
-  has_many :revisions, foreign_key: 'rev_page'
-
-  def page_title
-    self[:page_title].force_encoding('utf-8')
-  end
-end
-
-class Actor < ActiveRecord::Base
-  self.table_name = 'actor'
-  self.primary_key = 'actor_id'
-
-  has_many :revisions, foreign_key: 'rev_actor'
-
-  def actor_name
-    self[:actor_name].force_encoding('utf-8')
-  end
-end
-
-class Revision < ActiveRecord::Base
-  self.table_name = 'revision_userindex'
-  self.primary_key = 'rev_id'
-
-  has_one :parent_revision, class_name: 'Revision', foreign_key: 'rev_parent_id'
-  belongs_to :page, foreign_key: 'rev_page'
-  belongs_to :actor, foreign_key: 'rev_actor'
+class CopyrightDiffs < ActiveRecord::Base
+  self.table_name = 'copyright_diffs'
 end
