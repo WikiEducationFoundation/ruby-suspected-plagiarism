@@ -12,7 +12,7 @@ PASSWORD = credentials['password']
 
 
 class Replica
-  def self.connect(database: 'enwiki')
+  def self.connect
     ActiveRecord::Base.establish_connection(
       adapter: 'mysql2',
       database: COPYRIGHT_DATABASE,
