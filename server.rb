@@ -1,5 +1,5 @@
 require 'sinatra'
-require_relative './replica.rb'
+require_relative './database.rb'
 
 get '/' do
   'Ohai'
