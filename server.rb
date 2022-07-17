@@ -10,9 +10,11 @@ end
 
 before do
   content_type 'application/json', 'charset' => 'utf-8'
-  Replica.connect
+  Database.connect
 end
 
+
+
 after do
-  Replica.close_connection
+  Database.close_connection
 end

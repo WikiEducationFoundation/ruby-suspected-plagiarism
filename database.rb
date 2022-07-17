@@ -11,7 +11,7 @@ USERNAME = credentials['user']
 PASSWORD = credentials['password']
 
 
-class Replica
+class Database
   def self.connect
     ActiveRecord::Base.establish_connection(
       adapter: 'mysql2',
