@@ -9,7 +9,8 @@ COPYRIGHT_DATABASE = 's51306__copyright_p'
 credentials = YAML.load(File.open('cnf.yml').read)
 USERNAME = credentials['user']
 PASSWORD = credentials['password']
-
+ITHENTICATE_USER = credentials['ithenticate_user']
+ITHENTICATE_PASSWORD = credentials['ithenticate_password']
 
 class Database
   def self.connect
