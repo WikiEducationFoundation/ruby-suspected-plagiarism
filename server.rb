@@ -25,7 +25,7 @@ end
 
 get '/ithenticate_report_url/:ithenticate_id' do
   server = XMLRPC::Client.new2("https://api.ithenticate.com/rpc")
-  login_response = server.call('login', username: ithenticate_user, password: ithenticate_password)
+  login_response = server.call('login', username: ITHENTICATE_USER, password: ITHENTICATE_PASSWORD)
   # response looks like:
   # {"status"=>200, "response_timestamp"=>#<XMLRPC::DateTime:0x000056454cce3eb0 @year=2022, @month=7, @day=18, @hour=21, @min=54, @sec=51>, "sid"=>"111104a89ab1111487225acfc111b37ce1111", "api_status"=>200}
   return { 'error' => 'ithenticate login failed' }.to_json unless login_response['status'] == 200
