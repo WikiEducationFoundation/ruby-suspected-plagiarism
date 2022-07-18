@@ -8,12 +8,13 @@ Toolforge webservice implementation based on https://phabricator.wikimedia.org/T
 * create a tool and log in to it
 * clone this repo into `www/ruby/src`
 * turn `replica.my.cnf` into `cnf.yml` and move it to the git directory
+* add `ithenticate_user` and `ithenticate_password` values to `cnf.yml`.
 * create `service.template` like this:
   ```
   backend: kubernetes
-  type: ruby25
+  type: ruby27
   ```
-* Enter a webservice shell then install the gems within the shell:
+* Enter a webservice shell then install the gems from within the shell. This will install them using the bundler version of the `ruby27` Docker container (rather than the version available to the tool account) so that it will be run successfully.
   * `webservice shell`
   * `cd www/ruby/src`
   * `bundle install --path $HOME/www/ruby/vendor`
@@ -25,4 +26,4 @@ Toolforge webservice implementation based on https://phabricator.wikimedia.org/T
   APP_ENV=production bundle exec ruby server.rb
   ```
 * Make the script executable
-* `webservice ruby25 start $HOME/start.sh`
+* `webservice ruby27 start $HOME/start.sh`

@@ -34,6 +34,7 @@ class CopyrightDiffs < ActiveRecord::Base
   self.ignored_columns = ['report']
 
   def page_title
+    # This ensures the page title will be able to convert cleanly to JSON.
     self[:page_title].force_encoding('UTF-8')
   end
 end
