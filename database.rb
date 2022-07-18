@@ -30,4 +30,9 @@ end
 
 class CopyrightDiffs < ActiveRecord::Base
   self.table_name = 'copyright_diffs'
+  self.ignored_columns = ['report']
+
+  def page_title
+    self[:page_title].force_encoding('UTF-8')
+  end
 end
