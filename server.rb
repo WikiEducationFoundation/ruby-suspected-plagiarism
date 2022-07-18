@@ -8,11 +8,6 @@ set :port, 8000
 
 before do
   content_type 'application/json', 'charset' => 'utf-8'
-  Database.connect
-end
-
-after do
-  Database.close_connection
 end
 
 get '/' do
@@ -20,7 +15,12 @@ get '/' do
 end
 
 get '/suspected_diffs' do
+  Database.connect
   CopyrightDiffs.last(100).to_json
+end
+
+after '/suspected_diffs' do
+  Database.close_connection
 end
 
 get '/ithenticate_report_url/:ithenticate_id' do
