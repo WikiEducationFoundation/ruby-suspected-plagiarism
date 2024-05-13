@@ -1,4 +1,4 @@
-Ruby API for accessing recent suspected plagiarism detected by eranbot / plagiabot.
+Ruby API for accessing recent suspected plagiarism detected by CopyPatrol
 
 This is essentially a rewrite of just the webservice from https://github.com/valhallasw/plagiabot/blob/master/webservice/api.py
 
@@ -12,9 +12,9 @@ Toolforge webservice implementation based on https://phabricator.wikimedia.org/T
 * create `service.template` like this:
   ```
   backend: kubernetes
-  type: ruby27
+  type: ruby2.7
   ```
-* Enter a webservice shell then install the gems from within the shell. This will install them using the bundler version of the `ruby27` Docker container (rather than the version available to the tool account) so that it will be run successfully.
+* Enter a webservice shell then install the gems from within the shell. This will install them using the bundler version of the `ruby2.7` Docker container (rather than the version available to the tool account) so that it will be run successfully.
   * `webservice shell`
   * `cd www/ruby/src`
   * `bundle install --path $HOME/www/ruby/vendor`
@@ -26,4 +26,13 @@ Toolforge webservice implementation based on https://phabricator.wikimedia.org/T
   APP_ENV=production bundle exec ruby server.rb
   ```
 * Make the script executable
-* `webservice ruby27 start $HOME/start.sh`
+* `webservice ruby2.7 start $HOME/start.sh`
+
+## Deploying updates
+
+* stop the webservice: `webservice stop`
+* pull in the new code:
+  * `cd www/ruby/src`
+  * `git pull`
+* repeat `bundle install` process from a shell, if any gem requirements changed
+* restart the webservice: `webservice ruby2.7 start $HOME/start.sh`
