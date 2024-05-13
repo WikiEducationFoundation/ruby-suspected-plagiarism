@@ -36,7 +36,8 @@ end
 class CopyrightDiffs < ActiveRecord::Base
   self.table_name = 'diffs'
   self.primary_key = 'diff_id'
-  self.ignored_columns = []
+  # This column can contain non-UTF-8 characters and we don't need it.
+  self.ignored_columns = ['rev_user_text']
 
   def page_title
     # This ensures the page title will be able to convert cleanly to JSON.
